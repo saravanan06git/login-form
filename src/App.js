@@ -1,8 +1,8 @@
-import React from "react"
+import React from "react";
 import './App.css';
 import { Counter } from './components/counter';
-import {Routes,Route} from 'react-router-dom'
-import {Output} from './components/success'
+import {Routes,Route} from 'react-router-dom';
+import {Output} from './components/success';
 
 function App() {
   return (
