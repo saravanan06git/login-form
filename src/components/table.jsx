@@ -20,7 +20,7 @@ console.log(alldata);
             <tr>
             <th>S.No</th>  
             <th>timepoint</th>
-            <th>thansparency</th>
+            <th>transparency</th>
             <th> wind10m - direction</th>
             <th>wind10m-speed</th>
             <th>temp2m as temperature</th>
