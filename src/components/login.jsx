@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
+import {useSelector,useDispatch} from "react-redux";
+import {REDUXCONST} from "../redux/redux";
 
 export const Login=()=>{
+    const reduxState = useSelector(state=>state)
+    const reduxDispatch = useDispatch()
     const navigate=useNavigate()
     const [user,setUser]=useState({
         email:"",
@@ -10,6 +14,7 @@ export const Login=()=>{
     const valuesubmit = ()=>{
         let {email,password}=user;
         console.log("pass",password.length)
+            
         if(!email|| !password){
             alert("Email and Password is  must required")
         }else if(!/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(email)){
@@ -17,10 +22,12 @@ export const Login=()=>{
         }else if(password.length<5){
           alert("password should greater than 4")
         }else{
-            if(email.toLowerCase()==="admin@gmail.com"&&password==="12345"){
+            if(reduxState.email===user.email && reduxState.password===user.password)
+           {
                 console.log(email,password)
                 alert("succesful login");
                 navigate("/dashboard")
+                reduxDispatch({type: REDUXCONST})
                 
             }else{
                 alert("Check your emailandpassword");
@@ -39,3 +46,5 @@ export const Login=()=>{
         </div>
     )
 }
+
+//  if(email.toLowerCase()==="admin@gmail.com"&&password==="12345")
