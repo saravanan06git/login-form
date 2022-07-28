@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import Table from "./table";
 
-export let Output = () => {
+export let WelcomePage = () => {
   return  (
     <div className="text-center mt-5 pt-5">
     <Link to="/"><button className="py-2 px-5 rounded-pill fw-bold text-white bg-success">Sign Out</button></Link>
