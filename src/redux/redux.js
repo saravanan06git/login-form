@@ -2,11 +2,7 @@ import React from "react";
 import {createStore} from "redux";
 
 export const REDUXCONST = "REDUXCONST";
-const loginAction = () =>{
-    return {
-        type: REDUXCONST
-    }
-}
+
 
 const intialState = {
     email: "admin@gmail.com",

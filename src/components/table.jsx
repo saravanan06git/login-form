@@ -7,16 +7,29 @@ const Table = () => {
         console.log(event.target.id);
     }
     const [alldata,setState]=useState([]);
-    const [rowsPer]=useState([10,12,6]);
+    const [rowsPer]=useState([6,10,12]);
     const [myPage,setPage] = useState(1);
     const [perPage,setrowPage] = useState(5);
+    const [searchFilter,setSearchFilter] = useState([]);
+    const [search,setSearch] = useState();
+
+    useEffect(()=>{
+       
+            fetch('https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0')
+                 .then((response) => response.json())
+                 .then(data => setState(data.dataseries))
+         
+     },[])
+
+
+
     const emptyArray = [];
     for(var i=1; i<=Math.ceil(alldata.length/perPage); i++){
         emptyArray.push(i);
     }
     console.log(Math.ceil(alldata.length/perPage));
     const devidePage = emptyArray.map(number=>{
-        return <li key={number} id={number} className="page-item px-3 mx-1 py-2 fs-5 mt-3 rounded-5 fw-bold bg-warning" onClick={onClickPage}>{number}</li>
+        return <li key={number} id={number} className="page-item px-3 mx-1 py-2 fs-5 mt-3 rounded-5 fw-bold bg-warning btn" onClick={onClickPage}>{number}</li>
     })
 
     const lastPage = myPage*perPage;
@@ -24,20 +37,28 @@ const Table = () => {
     const currentItem = alldata.slice(firstPage,lastPage);
     console.log(alldata);
     console.log(currentItem);
+
+    const onSearch = (searchValue) =>{
+        setSearch(searchValue)
+        const searchFill = alldata.slice(firstPage,lastPage).filter(data=>{
+            return Object.values(data).join('').toLowerCase().includes(searchValue.toLowerCase())
+            // console.log(data.wind10m.direction.split("").includes(e.target.value.toUpperCase()))
+        })
+        setSearchFilter(searchFill);
+        console.log(search);
+    }
+
     const onChange = (event)=>{
         setrowPage(event.target.value)
     }
-     useEffect(()=>{
-        const myapi= async() =>{
-            const myapi = await fetch('https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0')
-                 .then((response) => response.json())
-                 .then(data => setState(data.dataseries))
-         }
-      myapi();
-     },[])
 
+     
     return (
     <div className="mt-5">
+        <div className="py-4">
+            <input type="text" placeholder="Search" name="search" value={search} 
+            className="fs-5 fw-bold text-center" onChange={(event)=>onSearch(event.target.value)}/>
+        </div>
         <table className="m-auto table table-striped w-75">
         <thead className="bg-dark text-white">
             <tr>
@@ -51,17 +72,36 @@ const Table = () => {
         </thead>
         <tbody>
             {
-                currentItem.map((value,id)=>(         
-                        <tr key={id}>
-                            <td className="fw-bold fs-5">{id+1}</td>
-                            <td className="fw-bold fs-5">{value.timepoint}</td>
-                            <td className="fw-bold fs-5">{value.transparency}</td>
-                            <td className="fw-bold fs-5">{value.wind10m.direction}</td>               
-                            <td className="fw-bold fs-5">{value.wind10m.speed}</td>
-                            <td className="fw-bold fs-5">{value.temp2m}</td>
-                        </tr>
-                    )      
-                )      
+                
+                   currentItem.map((value,id)=>{
+                            return(         
+                            <tr key={id}>
+                                <td className="fw-bold fs-5">{id+1}</td>
+                                <td className="fw-bold fs-5">{value.timepoint}</td>
+                                <td className="fw-bold fs-5">{value.transparency}</td>
+                                <td className="fw-bold fs-5">{value.wind10m.direction}</td>               
+                                <td className="fw-bold fs-5">{value.wind10m.speed}</td>
+                                <td className="fw-bold fs-5">{value.temp2m}</td>
+                            </tr>
+                        ) 
+                            }     
+                    
+                )
+                // ):(
+                //     currentItem.map((value,id)=>(         
+                //         <tr key={id}>
+                //             <td className="fw-bold fs-5">{id+1}</td>
+                //             <td className="fw-bold fs-5">{value.timepoint}</td>
+                //             <td className="fw-bold fs-5">{value.transparency}</td>
+                //             <td className="fw-bold fs-5">{value.wind10m.direction}</td>               
+                //             <td className="fw-bold fs-5">{value.wind10m.speed}</td>
+                //             <td className="fw-bold fs-5">{value.temp2m}</td>
+                //         </tr>
+                //     )      
+                // )   
+
+                // )
+                 
             }
         </tbody>
     </table>
@@ -88,5 +128,4 @@ const Table = () => {
     </div>
     );
 }
-
 export default Table
