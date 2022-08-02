@@ -34,7 +34,7 @@ export const Login=()=>{
             }
         }
     }
-       
+      
     return (
         <div className="text-center mt-5 py-5 bg-success w-50 h-50 m-auto rounded-pill">
             <h1 className="text-white">Login Page</h1>
