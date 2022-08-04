@@ -30,7 +30,7 @@ export const Login=()=>{
                 reduxDispatch({type: REDUXCONST})
                 
             }else{
-                alert("Check your emailandpassword");
+                alert("Check your emailandpassword ");
             }
         }
     }
