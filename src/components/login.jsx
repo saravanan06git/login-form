@@ -12,6 +12,7 @@ export const Login=()=>{
         password:""
     })
     const valuesubmit = ()=>{
+        console.log(reduxState);
         let {email,password}=user;
         console.log("pass",password.length)
             
